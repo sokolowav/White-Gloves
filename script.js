@@ -1,3 +1,4 @@
+
 // -------- SWIPER NEWS ----------------------------------------
 
 const swiperNews = new Swiper('.news .swiper', {
