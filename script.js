@@ -1144,41 +1144,20 @@ phoneInputEquipment.addEventListener('keydown', (e) => {
   }
 })
 
+
 //------- Telegram --------
 function sendToTelegram({ phone, contactMethod, serviceSummary, total }) {
-  const token = '7639017119:AAHDagTmrJauiaIlbweICoeBxummmtWNzBo'
-  const chatId = '-4815515803'
-  // const chatId = '556232815'
-  let serviceSummaryFormatted = '-'
-  if (serviceSummary)
-    serviceSummaryFormatted =
-      '\n' +
-      Object.entries(serviceSummary)
-
-        .map(([key, value]) => `${key}: ${value}`)
-        .join('\n')
-
-  const message = `
-🧾 <b>Новый заказ с сайта:</b>
-
-📞 <b>Телефон: ${phone} </b>
-📲 <b>Способ связи:</b> ${contactMethod || '-'} 
-🧹 <b>Услуги:</b> ${serviceSummaryFormatted}
-💰 <b>Стоимость:</b> ${total || '-'}
-`
-
-  const url = `https://api.telegram.org/bot${token}/sendMessage`
-  const data = {
-    chat_id: chatId,
-    text: message,
-    parse_mode: 'HTML',
-  }
-
-  fetch(url, {
+  fetch('/api/send', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  }).then((res) => {
-    if (!res.ok) console.error('Ошибка отправки в Telegram')
+    body: JSON.stringify({ phone, contactMethod, serviceSummary, total }),
   })
+    .then((res) => {
+      if (!res.ok) {
+        console.error('Ошибка при отправке на сервер')
+      }
+    })
+    .catch((err) => {
+      console.error('Ошибка сети:', err)
+    })
 }
