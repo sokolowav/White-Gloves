@@ -1,4 +1,3 @@
-
 // -------- SWIPER NEWS ----------------------------------------
 
 const swiperNews = new Swiper('.news .swiper', {
@@ -140,12 +139,13 @@ document.querySelectorAll('.slider').forEach((slider) => {
 })
 
 function slide(id) {
-  const slider = document.getElementById(id)
+  const slider = document.getElementById(`${id}`)
   const slideValue = slider.value
+  const beforePic = document.querySelector(`#pic-${id}`)
+  const line = document.querySelector(`#line-${id}`)
 
-  slider.previousElementSibling.previousElementSibling.style.clipPath = `polygon(0 0, ${slideValue}% 0, ${slideValue}% 100%, 0 100%)`
+  beforePic.style.clipPath = `polygon(0 0, ${slideValue}% 0, ${slideValue}% 100%, 0 100%)`
 
-  const line = document.getElementById(`line-${id}`)
   line.style.left = `calc(${slideValue}% - 1px)`
 }
 
@@ -1144,7 +1144,6 @@ phoneInputEquipment.addEventListener('keydown', (e) => {
     document.querySelector('.equipment__button').click()
   }
 })
-
 
 //------- Telegram --------
 function sendToTelegram({ phone, contactMethod, serviceSummary, total }) {
